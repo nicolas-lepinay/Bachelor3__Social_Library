@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_club_clubs",
+  "info": {
+    "displayName": "Club",
+    "icon": "grin-beam"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

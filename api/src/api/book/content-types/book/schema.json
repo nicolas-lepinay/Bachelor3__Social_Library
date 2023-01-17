@@ -1,0 +1,84 @@
+{
+  "kind": "collectionType",
+  "collectionName": "books",
+  "info": {
+    "singularName": "book",
+    "pluralName": "books",
+    "displayName": "Book",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "ISBN": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "pages": {
+      "type": "integer"
+    },
+    "release_date": {
+      "type": "date"
+    },
+    "publisher": {
+      "type": "string"
+    },
+    "rank_in_series": {
+      "type": "decimal"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "comments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::comment.comment",
+      "mappedBy": "book"
+    },
+    "genres": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::genre.genre",
+      "inversedBy": "books"
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tag.tag",
+      "inversedBy": "books"
+    },
+    "author": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::author.author",
+      "inversedBy": "books"
+    },
+    "book_serie": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::book-serie.book-serie",
+      "inversedBy": "books"
+    }
+  }
+}

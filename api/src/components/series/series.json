@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_series_series",
+  "info": {
+    "displayName": "Series",
+    "icon": "splotch"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "books": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::book.book"
+    }
+  }
+}

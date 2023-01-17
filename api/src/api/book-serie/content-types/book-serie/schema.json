@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "book_series",
+  "info": {
+    "singularName": "book-serie",
+    "pluralName": "book-series",
+    "displayName": "Book serie"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "books": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::book.book",
+      "mappedBy": "book_serie"
+    },
+    "name": {
+      "type": "string"
+    }
+  }
+}

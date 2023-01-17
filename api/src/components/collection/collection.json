@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_collection_collections",
+  "info": {
+    "displayName": "Collection",
+    "icon": "crown"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "books": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::book.book"
+    }
+  }
+}

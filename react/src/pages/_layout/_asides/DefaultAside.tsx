@@ -22,7 +22,7 @@ const DefaultAside = () => {
 	return (
 		<Aside>
 			<AsideHead>
-				<Brand asideStatus={asideStatus} setAsideStatus={setAsideStatus} />
+				{/* <Brand asideStatus={asideStatus} setAsideStatus={setAsideStatus} /> */}
 			</AsideHead>
 			<AsideBody>
 				<Navigation menu={dashboardPagesMenu} id='aside-dashboard' />

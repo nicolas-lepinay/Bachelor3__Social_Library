@@ -7,17 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../contexts/authContext';
 import { demoPagesMenu } from '../../menu';
 
-interface IPageWrapperProps {
-	isProtected?: boolean;
-	title?: string;
-	description?: string;
-	children:
-		| ReactElement<ISubHeaderProps>[]
-		| ReactElement<IPageProps>
-		| ReactElement<IPageProps>[];
-	className?: string;
-}
-const PageWrapper = forwardRef<HTMLDivElement, IPageWrapperProps>(
+// 🛠️ useAuth hook :
+import useAuth from '../../hooks/useAuth';
+
+const PageWrapper = forwardRef(
 	({ isProtected, title, description, className, children }, ref) => {
 		useLayoutEffect(() => {
 			// @ts-ignore
@@ -30,11 +23,14 @@ const PageWrapper = forwardRef<HTMLDivElement, IPageWrapperProps>(
 				.setAttribute('content', description || process.env.REACT_APP_META_DESC || '');
 		});
 
+        // 🦸 Logged-in user :
+        const auth = useAuth(); 
+
 		const { user } = useContext(AuthContext);
 
 		const navigate = useNavigate();
 		useEffect(() => {
-			if (isProtected && user === '') {
+			if (isProtected && !auth?.user) {
 				navigate(`../${demoPagesMenu.login.path}`);
 			}
 			return () => {};
@@ -58,7 +54,7 @@ PageWrapper.propTypes = {
 	className: PropTypes.string,
 };
 PageWrapper.defaultProps = {
-	isProtected: true,
+	isProtected: false,
 	title: undefined,
 	description: undefined,
 	className: undefined,

@@ -1,3 +1,6 @@
+// 🅰️ Axios :
+import axios from 'axios';
+
 export function test() {
 	return null;
 }
@@ -96,3 +99,32 @@ export const debounce = (func: (arg0: any) => void, wait = 1000) => {
 		timeout = setTimeout(later, wait);
 	};
 };
+
+
+export const doesUserExist = async (username: string) => {
+    // ⚙️ Strapi's URL :
+    const API_URL = process.env.REACT_APP_API_URL;
+    const USERS_ROUTE = process.env.REACT_APP_USERS_ROUTE;
+
+    try {
+        const res = await axios.get(`${API_URL}${USERS_ROUTE}?filters[username]=${username}`);
+        return res.data[0] ? true : false;
+    } catch(err) {
+        console.log(`DOES USER EXIST | Error : ${err}`)
+        return false;
+    }
+}
+
+export const findUserById = async (id: number) => {
+    // ⚙️ Strapi's URL :
+    const API_URL = process.env.REACT_APP_API_URL;
+    const USERS_ROUTE = process.env.REACT_APP_USERS_ROUTE;
+
+    try {
+        const res = await axios.get(`${API_URL}${USERS_ROUTE}?filters[id]=${id}`);
+        return res.data[0];
+    } catch(err) {
+        console.log(`FIND USER BY ID | Error : ${err}`)
+        return null;
+    }
+}

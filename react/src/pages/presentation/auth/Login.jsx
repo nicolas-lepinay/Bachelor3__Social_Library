@@ -1,7 +1,11 @@
+// 🌌 React :
 import React, { FC, useCallback, useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+
+// Components
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../layout/Page/Page';
 import Card, { CardBody } from '../../../components/bootstrap/Card';
@@ -9,17 +13,19 @@ import FormGroup from '../../../components/bootstrap/forms/FormGroup';
 import Input from '../../../components/bootstrap/forms/Input';
 import Button from '../../../components/bootstrap/Button';
 import Logo from '../../../components/Logo';
-import useDarkMode from '../../../hooks/useDarkMode';
-import { useFormik } from 'formik';
-import AuthContext from '../../../contexts/authContext';
-import USERS, { getUserDataWithUsername } from '../../../common/data/userDummyData';
 import Spinner from '../../../components/bootstrap/Spinner';
 import Alert from '../../../components/bootstrap/Alert';
 
-interface ILoginHeaderProps {
-	isNewUser?: boolean;
-}
-const LoginHeader: FC<ILoginHeaderProps> = ({ isNewUser }) => {
+// 🛠️ Hooks :
+import useDarkMode from '../../../hooks/useDarkMode';
+import { useFormik } from 'formik';
+import useAuth from '../../../hooks/useAuth';
+
+import AuthContext from '../../../contexts/authContext';
+import USERS, { getUserDataWithUsername } from '../../../common/data/userDummyData';
+import { doesUserExist } from '../../../helpers/helpers';
+
+const LoginHeader = ({ isNewUser }) => {
 	if (isNewUser) {
 		return (
 			<>
@@ -36,27 +42,35 @@ const LoginHeader: FC<ILoginHeaderProps> = ({ isNewUser }) => {
 	);
 };
 
-interface ILoginProps {
-	isSignUp?: boolean;
-}
-const Login: FC<ILoginProps> = ({ isSignUp }) => {
+const Login = ({ isSignUp }) => {
 	const { setUser } = useContext(AuthContext);
 
 	const { darkModeStatus } = useDarkMode();
 
-	const [signInPassword, setSignInPassword] = useState<boolean>(false);
-	const [singUpStatus, setSingUpStatus] = useState<boolean>(!!isSignUp);
+	const [signInPassword, setSignInPassword] = useState(false);
+	const [singUpStatus, setSingUpStatus] = useState(!isSignUp);
 
 	const navigate = useNavigate();
 	const handleOnClick = useCallback(() => navigate('/'), [navigate]);
 
-	const usernameCheck = (username: string) => {
-		return !!getUserDataWithUsername(username);
-	};
+	// const usernameCheck = (username) => {
+	// 	return !!getUserDataWithUsername(username);
+	// };
 
-	const passwordCheck = (username: string, password: string) => {
-		return getUserDataWithUsername(username).password === password;
-	};
+	// const passwordCheck = (username, password) => {
+	// 	return getUserDataWithUsername(username).password === password;
+	// };
+
+    const auth = useAuth();
+
+    // 🗝️ Login function:
+    const handleLogin = async (identifier, password) => {
+        const loginInfo = {
+            identifier: identifier,
+            password: password
+        }
+        auth.login(loginInfo)
+    }
 
 	const formik = useFormik({
 		enableReinitialize: true,
@@ -65,7 +79,7 @@ const Login: FC<ILoginProps> = ({ isSignUp }) => {
 			loginPassword: USERS.JOHN.password,
 		},
 		validate: (values) => {
-			const errors: { loginUsername?: string; loginPassword?: string } = {};
+			const errors = {};
 
 			if (!values.loginUsername) {
 				errors.loginUsername = 'Required';
@@ -79,35 +93,35 @@ const Login: FC<ILoginProps> = ({ isSignUp }) => {
 		},
 		validateOnChange: false,
 		onSubmit: (values) => {
-			if (usernameCheck(values.loginUsername)) {
-				if (passwordCheck(values.loginUsername, values.loginPassword)) {
-					if (setUser) {
-						setUser(values.loginUsername);
-					}
+            console.log("TEST");
+            handleLogin(values.loginUsername, values.loginPassword)
+            //auth.login({ identifier: values.loginUsername, password: values.loginPassword })
+			// if (usernameCheck(values.loginUsername)) {
+			// 	if (passwordCheck(values.loginUsername, values.loginPassword)) {
+			// 		if (setUser) {
+			// 			setUser(values.loginUsername);
+			// 		}
 
-					handleOnClick();
-				} else {
-					formik.setFieldError('loginPassword', 'Username and password do not match.');
-				}
-			}
+			// 		handleOnClick();
+			// 	} else {
+			// 		formik.setFieldError('loginPassword', 'Username and password do not match.');
+			// 	}
+			// }
 		},
 	});
 
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const handleContinue = () => {
+	const [isLoading, setIsLoading] = useState(false);
+
+	const handleContinue = async() => {
 		setIsLoading(true);
-		setTimeout(() => {
-			if (
-				!Object.keys(USERS).find(
-					(f) => USERS[f].username.toString() === formik.values.loginUsername,
-				)
-			) {
-				formik.setFieldError('loginUsername', 'No such user found in the system.');
-			} else {
-				setSignInPassword(true);
-			}
-			setIsLoading(false);
-		}, 1000);
+        const userExists = await doesUserExist(formik.values.loginUsername);
+
+        if (userExists) {
+            setSignInPassword(true);
+        } else {
+            formik.setFieldError('loginUsername', "Ce nom d'utilisateur n'existe pas.");
+        }
+        setIsLoading(false);
 	};
 
 	return (
@@ -130,7 +144,7 @@ const Login: FC<ILoginProps> = ({ isSignUp }) => {
 												'text-light': darkModeStatus,
 											},
 										)}>
-										<Logo width={200} />
+										{/* <Logo width={200} /> */}
 									</Link>
 								</div>
 								<div

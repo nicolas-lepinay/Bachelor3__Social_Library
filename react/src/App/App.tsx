@@ -13,6 +13,7 @@ import COLORS from '../common/data/enumColors';
 import { getOS } from '../helpers/helpers';
 import steps, { styles } from '../steps';
 import AsideRoutes from '../layout/Aside/AsideRoutes';
+import { ProvideAuth } from '../hooks/useAuth';
 
 const App = () => {
 	getOS();
@@ -63,30 +64,32 @@ const App = () => {
 	});
 
 	return (
-		<ThemeProvider theme={theme}>
-			<ToastProvider components={{ ToastContainer, Toast }}>
-				<TourProvider
-					steps={steps}
-					styles={styles}
-					showNavigation={false}
-					showBadge={false}>
-					<div
-						ref={ref}
-						className='app'
-						style={{
-							backgroundColor: fullScreenStatus ? 'var(--bs-body-bg)' : undefined,
-							zIndex: fullScreenStatus ? 1 : undefined,
-							overflow: fullScreenStatus ? 'scroll' : undefined,
-						}}>
-						<AsideRoutes />
-						<Wrapper />
-					</div>
-					<Portal id='portal-notification'>
-						<ReactNotifications />
-					</Portal>
-				</TourProvider>
-			</ToastProvider>
-		</ThemeProvider>
+		<ProvideAuth>
+            <ThemeProvider theme={theme}>
+                <ToastProvider components={{ ToastContainer, Toast }}>
+                    <TourProvider
+                        steps={steps}
+                        styles={styles}
+                        showNavigation={false}
+                        showBadge={false}>
+                        <div
+                            ref={ref}
+                            className='app'
+                            style={{
+                                backgroundColor: fullScreenStatus ? 'var(--bs-body-bg)' : undefined,
+                                zIndex: fullScreenStatus ? 1 : undefined,
+                                overflow: fullScreenStatus ? 'scroll' : undefined,
+                            }}>
+                            <AsideRoutes />
+                            <Wrapper />
+                        </div>
+                        <Portal id='portal-notification'>
+                            <ReactNotifications />
+                        </Portal>
+                    </TourProvider>
+                </ToastProvider>
+            </ThemeProvider>
+        </ProvideAuth>
 	);
 };
 

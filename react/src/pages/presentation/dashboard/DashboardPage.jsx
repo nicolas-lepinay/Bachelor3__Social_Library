@@ -9,9 +9,24 @@ import SubHeader, {
 import Page from '../../../layout/Page/Page';
 import Popovers from '../../../components/bootstrap/Popovers';
 
+// 🛠️ Hooks :
+import useFetchUsers from '../../../hooks/useFetchUsers';
+
 const DashboardPage = () => {
+
+    // 🙎‍♀️ Fetch user :
+    const { 
+        data: user, 
+        loading: loadingUser,
+        error,
+        setData: setUser } = useFetchUsers({ filters: `&filters[username]=Nicolas`, isUnique: true });
+
+
+    console.log(user);
+
 	return (
-		<PageWrapper title='Dashboard Page'>
+		<PageWrapper
+            title='Dashboard Page'>
 			<SubHeader>
 				<SubHeaderLeft>
 					<Popovers

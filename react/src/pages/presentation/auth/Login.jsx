@@ -93,7 +93,6 @@ const Login = ({ isSignUp }) => {
 		},
 		validateOnChange: false,
 		onSubmit: (values) => {
-            console.log("TEST");
             handleLogin(values.loginUsername, values.loginPassword)
             //auth.login({ identifier: values.loginUsername, password: values.loginPassword })
 			// if (usernameCheck(values.loginUsername)) {
@@ -147,6 +146,13 @@ const Login = ({ isSignUp }) => {
 										{/* <Logo width={200} /> */}
 									</Link>
 								</div>
+
+                                {auth?.user && 
+                                <div>
+                                    <h2 style={{color: 'red'}}>User : {auth?.user?.username}</h2>
+                                    <button onClick={auth?.logout}>Logout</button>
+                                </div>}
+
 								<div
 									className={classNames('rounded-3', {
 										'bg-l10-dark': !darkModeStatus,

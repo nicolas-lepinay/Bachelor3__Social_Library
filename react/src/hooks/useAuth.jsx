@@ -27,7 +27,6 @@ function useProvideAuth() {
     const login = async ({ identifier, password }) => {
         setLoading(true)
         try {
-            console.log({ identifier, password })
             const res = await axios.post(`${API_URL}${AUTH_ROUTE}`, { identifier, password });
             const data = await res.data;
             if(data.user.blocked === false) {

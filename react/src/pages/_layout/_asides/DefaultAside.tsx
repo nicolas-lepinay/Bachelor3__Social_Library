@@ -33,7 +33,7 @@ const DefaultAside = () => {
 						<NavigationLine />
 						<Navigation menu={pageLayoutTypesPagesMenu} id='aside-menu' />
 						<NavigationLine />
-						<nav>
+						{/* <nav>
 							<div className='navigation'>
 								<div className='navigation-item'>
 									<span className='navigation-link navigation-link-pill'>
@@ -54,13 +54,16 @@ const DefaultAside = () => {
 									</span>
 								</div>
 							</div>
-						</nav>
+						</nav> */}
 					</>
 				)}
-				{asideStatus && doc && <div className='p-4'>Documentation</div>}
+
+				{/* {asideStatus && doc && <div className='p-4'>Documentation</div>} */}
+
 			</AsideBody>
+
 			<AsideFoot>
-				<nav aria-label='aside-bottom-menu'>
+				{/* <nav aria-label='aside-bottom-menu'>
 					<div className='navigation'>
 						<div
 							role='presentation'
@@ -94,7 +97,7 @@ const DefaultAside = () => {
 							</span>
 						</div>
 					</div>
-				</nav>
+				</nav> */}
 				<User />
 			</AsideFoot>
 		</Aside>

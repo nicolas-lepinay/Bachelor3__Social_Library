@@ -57,7 +57,8 @@
 				"allowLiteral": false,
 				"allowObject": true
 			}
-		]
+		],
+        "react/react-in-jsx-scope": "off"
 	},
 	"parser": "@typescript-eslint/parser",
 	"settings": {

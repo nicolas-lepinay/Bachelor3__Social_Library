@@ -131,10 +131,3 @@ export const pageLayoutTypesPagesMenu = {
 		},
 	},
 };
-
-export const productsExampleMenu = {
-	companyA: { id: 'companyA', text: 'Company A', path: 'grid-pages/products', subMenu: null },
-	companyB: { id: 'companyB', text: 'Company B', path: '/', subMenu: null },
-	companyC: { id: 'companyC', text: 'Company C', path: '/', subMenu: null },
-	companyD: { id: 'companyD', text: 'Company D', path: '/', subMenu: null },
-};

@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
 import SubHeader, {
@@ -17,16 +17,15 @@ const DashboardPage = () => {
     // 🙎‍♀️ Fetch user :
     const { 
         data: user, 
-        loading: loadingUser,
-        error,
-        setData: setUser } = useFetchUsers({ filters: `&filters[username]=Nicolas`, isUnique: true });
+        setData: setUser 
+    } = useFetchUsers({ filters: `&filters[username]=Nicolas`, isUnique: true });
 
 
-    console.log(user);
+    // console.log(user);
 
 	return (
 		<PageWrapper
-            title='Dashboard Page'>
+            title='Dashboard Page' isProtected={true} >
 			<SubHeader>
 				<SubHeaderLeft>
 					<Popovers

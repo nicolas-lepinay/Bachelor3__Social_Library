@@ -1,10 +1,9 @@
-import React, { useLayoutEffect, forwardRef, ReactElement, useContext, useEffect } from 'react';
+import { useLayoutEffect, forwardRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ISubHeaderProps } from '../SubHeader/SubHeader';
-import { IPageProps } from '../Page/Page';
+// import { ISubHeaderProps } from '../SubHeader/SubHeader';
+// import { IPageProps } from '../Page/Page';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from '../../contexts/authContext';
 import { demoPagesMenu } from '../../menu';
 
 // 🛠️ useAuth hook :
@@ -12,6 +11,11 @@ import useAuth from '../../hooks/useAuth';
 
 const PageWrapper = forwardRef(
 	({ isProtected, title, description, className, children }, ref) => {
+
+        // 🦸 Logged-in user :
+        const auth = useAuth(); 
+        const navigate = useNavigate();
+
 		useLayoutEffect(() => {
 			// @ts-ignore
 			document.getElementsByTagName('TITLE')[0].text = `${title ? `${title} | ` : ''}${
@@ -23,15 +27,9 @@ const PageWrapper = forwardRef(
 				.setAttribute('content', description || process.env.REACT_APP_META_DESC || '');
 		});
 
-        // 🦸 Logged-in user :
-        const auth = useAuth(); 
-
-		const { user } = useContext(AuthContext);
-
-		const navigate = useNavigate();
 		useEffect(() => {
 			if (isProtected && !auth?.user) {
-				navigate(`../${demoPagesMenu.login.path}`);
+				navigate(`/${demoPagesMenu.login.path}`);
 			}
 			return () => {};
 			// eslint-disable-next-line react-hooks/exhaustive-deps

@@ -23,7 +23,10 @@ const useFetchUsers = ({
             setLoading(true);
             try {
                 const res = await axios.get(`${API_URL}${query}`);
-                isUnique ? setData(res.data[0]) : setData(res.data.sort((a, b) => a.username.localeCompare(b.username))); // Tri alphabétique en fonction du username
+                if(isUnique) 
+                    setData(res.data[0])
+                else 
+                    setData(res.data.sort((a, b) => a.username.localeCompare(b.username))); // Tri alphabétique en fonction du username
             } catch(err) {
                 setError(err)
                 console.log('USE FETCH USERS | ' + err)
@@ -32,7 +35,7 @@ const useFetchUsers = ({
             }
         }
         fetchData();
-    }, [query])
+    }, [query, isUnique, API_URL])
 
     return { 
         data,

@@ -1,5 +1,5 @@
 // 🌌 React :
-import React, { FC, useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
@@ -12,7 +12,7 @@ import Card, { CardBody } from '../../../components/bootstrap/Card';
 import FormGroup from '../../../components/bootstrap/forms/FormGroup';
 import Input from '../../../components/bootstrap/forms/Input';
 import Button from '../../../components/bootstrap/Button';
-import Logo from '../../../components/Logo';
+// import Logo from '../../../components/Logo';
 import Spinner from '../../../components/bootstrap/Spinner';
 import Alert from '../../../components/bootstrap/Alert';
 
@@ -21,11 +21,13 @@ import useDarkMode from '../../../hooks/useDarkMode';
 import { useFormik } from 'formik';
 import useAuth from '../../../hooks/useAuth';
 
-import AuthContext from '../../../contexts/authContext';
-import USERS, { getUserDataWithUsername } from '../../../common/data/userDummyData';
+import USERS from '../../../common/data/userDummyData';
 import { doesUserExist } from '../../../helpers/helpers';
 
+import { Store } from "tauri-plugin-store-api";
+
 const LoginHeader = ({ isNewUser }) => {
+
 	if (isNewUser) {
 		return (
 			<>
@@ -43,7 +45,6 @@ const LoginHeader = ({ isNewUser }) => {
 };
 
 const Login = ({ isSignUp }) => {
-	const { setUser } = useContext(AuthContext);
 
 	const { darkModeStatus } = useDarkMode();
 
@@ -69,7 +70,7 @@ const Login = ({ isSignUp }) => {
             identifier: identifier,
             password: password
         }
-        auth.login(loginInfo)
+        await auth.login(loginInfo);
     }
 
 	const formik = useFormik({
@@ -123,6 +124,12 @@ const Login = ({ isSignUp }) => {
         setIsLoading(false);
 	};
 
+    useEffect( () => {
+        if(auth?.success?.action === 'login') {
+            navigate('/');
+        }
+    }, [auth]);
+
 	return (
 		<PageWrapper
 			isProtected={false}
@@ -144,6 +151,7 @@ const Login = ({ isSignUp }) => {
 											},
 										)}>
 										{/* <Logo width={200} /> */}
+                                        Home
 									</Link>
 								</div>
 
@@ -152,6 +160,9 @@ const Login = ({ isSignUp }) => {
                                     <h2 style={{color: 'red'}}>User : {auth?.user?.username}</h2>
                                     <button onClick={auth?.logout}>Logout</button>
                                 </div>}
+
+                                <h2 style={{color: 'red'}}>ERROR : {auth?.error?.status}</h2>
+                                <h2 style={{color: 'red'}}>SUCCESS : {auth?.success?.message}</h2>
 
 								<div
 									className={classNames('rounded-3', {

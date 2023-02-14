@@ -11,14 +11,19 @@ import useNavigationItemHandle from '../../hooks/useNavigationItemHandle';
 import AuthContext from '../../contexts/authContext';
 import Popovers from '../../components/bootstrap/Popovers';
 
+// 🛠️ Hooks :
+import useAuth from '../../hooks/useAuth';
+
 const User = () => {
 	const { userData, setUser } = useContext(AuthContext);
+
+    const auth = useAuth();
 
 	const navigate = useNavigate();
 	const handleItem = useNavigationItemHandle();
 	const { darkModeStatus, setDarkModeStatus } = useDarkMode();
 
-	const [collapseStatus, setCollapseStatus] = useState<boolean>(false);
+	const [collapseStatus, setCollapseStatus] = useState(false);
 
 	const { t } = useTranslation(['translation', 'menu']);
 
@@ -39,16 +44,14 @@ const User = () => {
 				</div>
 				<div className='user-info'>
 					<div className='user-name'>
-						<Popovers title='User.tsx' desc={<code>src/layout/User/User.tsx</code>}>
-							{`${userData?.name} ${userData?.surname}`}
+						<Popovers>
+							{`${auth?.user?.username}`}
 						</Popovers>
-						<code className='ps-2'>User.tsx</code>
 					</div>
 					<div className='user-sub-title'>
-						<Popovers title='User.tsx' desc={<code>src/layout/User/User.tsx</code>}>
-							User
+						<Popovers>
+							Sous-titre
 						</Popovers>
-						<code className='ps-2'>User.tsx</code>
 					</div>
 				</div>
 			</div>
@@ -70,7 +73,7 @@ const User = () => {
 								<span className='navigation-link-info'>
 									<Icon icon='AccountBox' className='navigation-icon' />
 									<span className='navigation-text'>
-										{t('menu:Profile') as ReactNode}
+										{t('menu:Profile')}
 									</span>
 								</span>
 							</span>
@@ -91,8 +94,8 @@ const User = () => {
 									/>
 									<span className='navigation-text'>
 										{darkModeStatus
-											? (t('menu:DarkMode') as ReactNode)
-											: (t('menu:LightMode') as ReactNode)}
+											? (t('menu:DarkMode'))
+											: (t('menu:LightMode'))}
 									</span>
 								</span>
 							</span>
@@ -114,8 +117,8 @@ const User = () => {
 							<span className='navigation-link navigation-link-pill'>
 								<span className='navigation-link-info'>
 									<Icon icon='Logout' className='navigation-icon' />
-									<span className='navigation-text'>
-										{t('menu:Logout') as ReactNode}
+									<span className='navigation-text' onClick={() => auth?.logout()}>
+										{t('menu:Logout')}
 									</span>
 								</span>
 							</span>

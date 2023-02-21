@@ -131,3 +131,116 @@ export const pageLayoutTypesPagesMenu = {
 		},
 	},
 };
+
+export const menu1 = {
+    home: {
+		id: 'accueil',
+		text: 'Accueil',
+		path: '/',
+		icon: 'Dashboard',
+		subMenu: null,
+	},
+}
+
+export const menu2 = {
+    explore: {
+		id: 'explore',
+		text: 'Explorer',
+		path: '/explore',
+		icon: 'Dashboard',
+		subMenu: null,
+	},
+	genres: {
+		id: 'genres',
+		text: 'Genres',
+		path: 'genres',
+		icon: 'BackupTable',
+		subMenu: {
+            classics: {
+				id: 'classique',
+				text: 'Classique',
+				path: 'genres/classique',
+				icon: 'ViewAgenda',
+			},
+			fantasy: {
+				id: 'fantasy',
+				text: 'Fantastique',
+				path: 'genres/fantastique',
+				icon: 'ViewAgenda',
+			},
+            history: {
+				id: 'histoire',
+				text: 'Histoire',
+				path: 'genres/histoire',
+				icon: 'ViewAgenda',
+			},
+            childrens: {
+				id: 'jeunesse',
+				text: 'Jeunesse',
+				path: 'genres/jeunesse',
+				icon: 'ViewAgenda',
+			},
+			romance: {
+				id: 'romance',
+				text: 'Romance',
+				path: 'genres/romance',
+				icon: 'ViewStream',
+			},
+            scienceFiction: {
+				id: 'sci-fi',
+				text: 'Science-Fiction',
+				path: 'genres/science-fiction',
+				icon: 'ViewStream',
+			},
+		},
+	},
+    myBooks: {
+		id: 'my-books',
+		text: 'Mes livres',
+		path: '/mes-livres',
+		icon: 'Dashboard',
+		subMenu: null,
+	},
+}
+
+export const menu3 = {
+    events: {
+		id: 'events',
+		text: 'Évènements',
+		path: '/events',
+		icon: 'Dashboard',
+		subMenu: null,
+	},
+	community: {
+		id: 'community',
+		text: 'Communauté',
+		path: 'community',
+		icon: 'BackupTable',
+		subMenu: {
+            messenger: {
+				id: 'messenger',
+				text: 'Messagerie',
+				path: 'community/messenger',
+				icon: 'ViewAgenda',
+			},
+            myFriends: {
+				id: 'my-friends',
+				text: 'Mes amis',
+				path: 'community/friends',
+				icon: 'ViewAgenda',
+			},
+            myGroups: {
+				id: 'my-groups',
+				text: 'Mes groupes',
+				path: 'community/groups',
+				icon: 'ViewAgenda',
+			},
+            planning: {
+				id: 'planning',
+				text: 'Mon planning',
+				path: 'community/planning',
+				icon: 'ViewAgenda',
+			},
+		},
+	},
+}

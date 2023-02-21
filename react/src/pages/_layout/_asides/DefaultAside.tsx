@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Brand from '../../../layout/Brand/Brand';
 import Navigation, { NavigationLine } from '../../../layout/Navigation/Navigation';
 import User from '../../../layout/User/User';
-import { dashboardPagesMenu, demoPagesMenu, pageLayoutTypesPagesMenu } from '../../../menu';
+import { dashboardPagesMenu, demoPagesMenu, pageLayoutTypesPagesMenu, menu1, menu2, menu3 } from '../../../menu';
 import ThemeContext from '../../../contexts/themeContext';
 import Icon from '../../../components/icon/Icon';
 import Aside, { AsideBody, AsideFoot, AsideHead } from '../../../layout/Aside/Aside';
@@ -25,13 +25,13 @@ const DefaultAside = () => {
 				{/* <Brand asideStatus={asideStatus} setAsideStatus={setAsideStatus} /> */}
 			</AsideHead>
 			<AsideBody>
-				<Navigation menu={dashboardPagesMenu} id='aside-dashboard' />
+				<Navigation menu={menu1} id='aside-menu1' />
 				<NavigationLine />
 				{!doc && (
 					<>
-						<Navigation menu={demoPagesMenu} id='aside-demo-pages' />
+						<Navigation menu={menu2} id='aside-menu2' />
 						<NavigationLine />
-						<Navigation menu={pageLayoutTypesPagesMenu} id='aside-menu' />
+						<Navigation menu={menu3} id='aside-menu3' />
 						<NavigationLine />
 						{/* <nav>
 							<div className='navigation'>

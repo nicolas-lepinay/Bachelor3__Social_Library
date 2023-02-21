@@ -64,7 +64,7 @@ const User = () => {
 							className='navigation-item cursor-pointer'
 							onClick={() =>
 								navigate(
-									`/`,
+									`/mon-compte`,
 									// @ts-ignore
 									handleItem(),
 								)
@@ -73,7 +73,7 @@ const User = () => {
 								<span className='navigation-link-info'>
 									<Icon icon='AccountBox' className='navigation-icon' />
 									<span className='navigation-text'>
-										{t('menu:Profile')}
+										Mon compte
 									</span>
 								</span>
 							</span>

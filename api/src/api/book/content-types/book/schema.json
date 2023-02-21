@@ -79,6 +79,10 @@
       "relation": "manyToOne",
       "target": "api::book-serie.book-serie",
       "inversedBy": "books"
+    },
+    "stock": {
+      "type": "integer",
+      "default": 0
     }
   }
 }

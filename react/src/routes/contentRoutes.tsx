@@ -1,6 +1,7 @@
 import React, { lazy } from 'react';
-import { dashboardPagesMenu, demoPagesMenu, pageLayoutTypesPagesMenu } from '../menu';
+import { dashboardPagesMenu, demoPagesMenu, pageLayoutTypesPagesMenu, menu1, menu2, menu3 } from '../menu';
 import Login from '../pages/presentation/auth/Login';
+import Profile from '../pages/presentation/profile/Profile';
 
 const LANDING = {
 	DASHBOARD: lazy(() => import('../pages/presentation/dashboard/DashboardPage')),
@@ -18,14 +19,61 @@ const PAGE_LAYOUTS = {
 	MINIMIZE_ASIDE: lazy(() => import('../pages/presentation/aside-types/MinimizeAsidePage')),
 };
 
+const MENU_1 = {
+    HOME: lazy(() => import('../pages/presentation/home/Home')),
+}
+
+const MENU_2 = {
+    EXPLORE: lazy(() => import('../pages/presentation/explore/Explore')),
+    GENRES: lazy(() => import('../pages/presentation/genres/Genre')),
+    MY_BOOKS: lazy(() => import('../pages/presentation/my-books/MyBooks')),
+}
+
+const MENU_3 = {
+    EVENTS: lazy(() => import('../pages/presentation/events/Events')),
+}
+
+
 const presentation = [
+
+    // Accueil 
+	{
+		path: menu1.home.path,
+		element: <MENU_1.HOME />,
+	},
+
+    // Explore, Genres, My Books 
+	{
+		path: menu2.explore.path,
+		element: <MENU_2.EXPLORE />,
+	},
+    {
+		path: menu2.genres.path,
+		element: <MENU_2.GENRES />,
+	},
+    {
+		path: menu2.myBooks.path,
+		element: <MENU_2.MY_BOOKS />,
+	},
+
+    // Events, Community 
+	{
+		path: menu3.events.path,
+		element: <MENU_3.EVENTS />,
+	},
+
+    // Profile
+	{
+		path: 'mon-compte',
+		element: <Profile />,
+	},
 	/**
 	 * Landing
 	 */
-	{
-		path: dashboardPagesMenu.dashboard.path,
-		element: <LANDING.DASHBOARD />,
-	},
+	// {
+	// 	path: dashboardPagesMenu.dashboard.path,
+	// 	element: <LANDING.DASHBOARD />,
+	// },
 	{
 		path: demoPagesMenu.page404.path,
 		element: <AUTH.PAGE_404 />,
@@ -73,6 +121,7 @@ const presentation = [
 	// 	element: <PAGE_LAYOUTS.MINIMIZE_ASIDE />,
 	// },
 ];
+
 const contents = [...presentation];
 
 export default contents;

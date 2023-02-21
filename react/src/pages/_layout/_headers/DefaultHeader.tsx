@@ -1,7 +1,7 @@
 import React from 'react';
 import Header, { HeaderLeft, HeaderRight } from '../../../layout/Header/Header';
 import Navigation from '../../../layout/Navigation/Navigation';
-import { pageLayoutTypesPagesMenu } from '../../../menu';
+import { pageLayoutTypesPagesMenu, menu2 } from '../../../menu';
 import useDeviceScreen from '../../../hooks/useDeviceScreen';
 import Popovers from '../../../components/bootstrap/Popovers';
 
@@ -11,7 +11,7 @@ const DefaultHeader = () => {
 		<Header>
 			<HeaderLeft>
 				<Navigation
-					menu={{ ...pageLayoutTypesPagesMenu }}
+					menu={{ ...menu2 }}
 					id='header-top-menu'
 					horizontal={
 						!!width && width >= Number(process.env.REACT_APP_MOBILE_BREAKPOINT_SIZE)

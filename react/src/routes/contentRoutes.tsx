@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import { dashboardPagesMenu, demoPagesMenu, pageLayoutTypesPagesMenu, menu1, menu2, menu3 } from '../menu';
+import { dashboardPagesMenu, demoPagesMenu, pageLayoutTypesPagesMenu, menu1, menu2, menu3, queryPages } from '../menu';
 import Login from '../pages/presentation/auth/Login';
 import Profile from '../pages/presentation/profile/Profile';
 
@@ -31,6 +31,10 @@ const MENU_2 = {
 
 const MENU_3 = {
     EVENTS: lazy(() => import('../pages/presentation/events/Events')),
+}
+
+const QUERY_PAGES = {
+    BOOK: lazy(() => import('../pages/presentation/book/Book')),
 }
 
 
@@ -67,13 +71,13 @@ const presentation = [
 		path: 'mon-compte',
 		element: <Profile />,
 	},
-	/**
-	 * Landing
-	 */
-	// {
-	// 	path: dashboardPagesMenu.dashboard.path,
-	// 	element: <LANDING.DASHBOARD />,
-	// },
+
+    // Query Pages (/:id)
+	{
+		path: `${queryPages.book.path}/:id`,
+		element: <QUERY_PAGES.BOOK />,
+	},
+	// Autres
 	{
 		path: demoPagesMenu.page404.path,
 		element: <AUTH.PAGE_404 />,

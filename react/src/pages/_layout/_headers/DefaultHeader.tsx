@@ -18,14 +18,14 @@ const DefaultHeader = () => {
 					}
 				/>
 			</HeaderLeft>
-			<HeaderRight>
+			{/* <HeaderRight>
 				<Popovers
 					title='DefaultHeader.tsx'
 					desc={<code>src/pages/common/Headers/DefaultHeader.tsx</code>}>
 					Header Right
 				</Popovers>
 				<code>DefaultHeader.tsx</code>
-			</HeaderRight>
+			</HeaderRight> */}
 		</Header>
 	);
 };

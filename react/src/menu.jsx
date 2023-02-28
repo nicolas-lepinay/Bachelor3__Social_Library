@@ -244,3 +244,11 @@ export const menu3 = {
 		},
 	},
 }
+
+export const queryPages = {
+    book: {
+        id: 'book-page',
+        text: 'Livre',
+        path: '/livre',
+    },
+}

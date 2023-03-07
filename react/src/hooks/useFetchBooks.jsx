@@ -12,6 +12,15 @@ const useFetchBooks = ({
     const API_URL = process.env.REACT_APP_API_URL;
     const BOOKS_ROUTE = process.env.REACT_APP_BOOKS_ROUTE;
 
+    // const populate = [
+    //     'populate=author',
+    //     'populate=image',
+    //     'populate=book_serie',
+    //     'populate=comments',
+    //     'populate=genres',
+    //     'populate=tags'
+    // ]
+    
     const query = `${BOOKS_ROUTE}?populate=*${filters}`;
 
     const [data, setData] = useState([]);

@@ -1,5 +1,7 @@
+// ⚛️ REACT
 import { Link } from 'react-router-dom';
 
+// 🅱️ BOOTSTRAP
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
 import SubHeader, {
 	SubHeaderLeft,
@@ -26,28 +28,33 @@ import Carousel from '../../../components/bootstrap/Carousel';
 import CarouselSlide from '../../../components/bootstrap/CarouselSlide';
 import CarouselCaption from '../../../components/bootstrap/CarouselCaption';
 
-// Slider
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import Alert from '../../../components/bootstrap/Alert';
+import Spinner from '../../../components/bootstrap/Spinner';
 
-// 🛠️ Hooks :
+// 🖼️ SLIDER
+import BookSlider from '../../../components/BookSlider';
+
+// 🛠️ HOOKS :
 import useFetchBooks from '../../../hooks/useFetchBooks';
 
-// Book URL path :
-import { queryPages } from '../../../menu';
+// 📜 MENU :
+import { menu1, queryPages } from '../../../menu';
 
 const Explore = () => {
 
-    
     // ⚙️ Strapi's API ROUTES :
     const API_URL = process.env.REACT_APP_API_URL;
 
     // 📚 Fetch all books :
-    const { data: books } = useFetchBooks();
+    const { 
+        data: books,
+        loading: loadingBooks,
+        error, 
+    } = useFetchBooks();
 
     console.log(books)
 
+    // Slider settings :
     const settings = {
         dots: true,
         infinite: true,
@@ -55,6 +62,32 @@ const Explore = () => {
         slidesToShow: 5,
         slidesToScroll: 5
     };
+
+    // Chargement :
+    // if(loadingBooks)
+    // return (
+    //     <PageWrapper title='Chargement...'>
+    //         <div className='position-absolute top-50 start-50 translate-middle'>
+    //             <Spinner size={62} color="info" />
+    //         </div>
+    //     </PageWrapper>
+    // );
+
+    // Erreur :
+    if(error)
+        return (
+            <PageWrapper title="Une erreur s'est produite">
+                <div className='position-absolute top-50 start-50 translate-middle'>
+                    <Alert icon='Report' isLight color="danger" className='new-line'>
+                        {`Nous n'avons pas pu charger les livres\n(${error}).`}
+                    </Alert>
+                </div>
+            </PageWrapper>
+        );
+
+    // Si aucun utilisateur :
+    if(!books)
+        return <Navigate to={`/${menu1.home.path}`}/>
     
 	return (
 		<PageWrapper
@@ -84,35 +117,7 @@ const Explore = () => {
 			<Page container='fluid'>
 				<div className='row d-flex justify-content-center'>
 					<div className='col-9 mb-3'>
-                        <Slider {...settings} className='book-slider'>
-                            {books.map((book) => (
-                                <Link
-                                    to={`${queryPages.book.path}/${book.id}`}
-                                >
-                                    <div className='book-slider__container'>
-                                        <img src={`${API_URL}${book.attributes.image.data.attributes.url}`} />
-                                        <h3 className='font-playfair' title={book.attributes.title}>
-                                            {book.attributes.title.length < 50 ? book.attributes.title : `${book.attributes.title.slice(0, 50)}...`}
-                                        </h3>
-                                        <p>
-                                            {book.attributes.author.data.attributes.first_name} {book.attributes.author.data.attributes.last_name}
-                                        </p>
-                                    </div>
-                                </Link>
-                            ))}
-
-                            {books.map((book) => (
-                                <div>
-                                    <h3>Another book</h3>
-                                </div>
-                            ))}
-
-                            {books.map((book) => (
-                                <div>
-                                    <h3>Yet another book</h3>
-                                </div>
-                            ))}
-                        </Slider>
+                        <BookSlider books={books} />
 					</div>
 				</div>
 			</Page>

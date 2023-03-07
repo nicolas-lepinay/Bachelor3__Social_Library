@@ -20,8 +20,19 @@
 	--#{$prefix}border-opacity: 0;
 }
 
-// Books slider
+* {
+    scroll-behavior: smooth;
+    scrollbar-color: rgba(0, 0, 0, 0.05) rgba(250, 250, 250, 0.8);
+    scrollbar-width: thin;
+}
 
+a {
+    color: inherit;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+// FONTS FAMILY
 .font-baskerville {
     font-family: 'Libre Baskerville', serif;
 }
@@ -30,25 +41,55 @@
     font-family: 'Playfair Display', serif;
 }
 
+// FONT WEIGHTS
+$font-weights: 100, 200, 300, 400, 500, 600, 700, 800, 900;
+
+@each $font-weight in $font-weights {
+  .fw-#{$font-weight} {
+    font-weight: #{$font-weight};
+  }
+}
+
+// FONT SIZE
+@mixin font-size($size) {
+    font-size: $size + px;
+}
+
+@for $i from 1 through 200 {
+    .fs-#{$i} { @include font-size($i); }
+}
+
+// LINE HEIGHT
+@mixin line-height($height) {
+    line-height: $height + px;
+}
+
+@for $i from 0 through 100 {
+    .line-height-#{$i} { @include line-height($i); }
+}
+
+// BOOK SLIDER
 .book-slider {
     &__container {
         height: 425px;
         width: 225px!important;
-    }
-    & img {
-        border-radius: 20px;
-        height: 335px;
-        object-fit: cover;
-        margin-bottom: 20px;
-        width: 225px;
     }
     & h3 {
         font-size: 1.4rem;
     }
 }
 
-a {
-    color: inherit;
-    cursor: pointer;
-    text-decoration: none;
+.book-cover {
+    border-radius: 20px;
+    height: 335px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    width: 225px;
 }
+
+// CARD
+.transparent {
+    background-color: transparent;
+    box-shadow: none;
+}
+

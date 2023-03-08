@@ -38,7 +38,7 @@ import BookSlider from '../../../components/BookSlider';
 import useFetchBooks from '../../../hooks/useFetchBooks';
 
 // 📜 MENU :
-import { menu1, queryPages } from '../../../menu';
+                import { menu1, queryPages } from '../../../menu';
 
 const Explore = () => {
 

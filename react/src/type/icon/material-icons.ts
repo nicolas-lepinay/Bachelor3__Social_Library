@@ -1473,6 +1473,8 @@ export type TMaterialIcons =
 	| 'Star'
 	| 'StarBorder'
 	| 'StarBorderPurple500'
+    | 'StarEmpty'
+    | 'StarFull'
 	| 'StarHalf'
 	| 'StarOutline'
 	| 'StarPurple500'

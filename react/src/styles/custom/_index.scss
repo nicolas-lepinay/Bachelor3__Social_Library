@@ -6,6 +6,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap");
 
 .scroll-margin {
 	scroll-margin-top: map.get($header, height) + map.get($subheader, height) +
@@ -41,6 +42,10 @@ a {
     font-family: 'Playfair Display', serif;
 }
 
+.font-crimson {
+    font-family: 'Crimson Text', serif;
+}
+
 // FONT WEIGHTS
 $font-weights: 100, 200, 300, 400, 500, 600, 700, 800, 900;
 
@@ -68,6 +73,36 @@ $font-weights: 100, 200, 300, 400, 500, 600, 700, 800, 900;
     .line-height-#{$i} { @include line-height($i); }
 }
 
+// MARGINS
+@mixin margin-right($i) {
+    margin-right: $spacer * $i;
+}
+@for $i from 0 through 10 {
+    .mr-#{$i} { @include margin-right($i); }
+}
+
+@mixin margin-left($i) {
+    margin-left: $spacer * $i;
+}
+@for $i from 0 through 10 {
+    .ml-#{$i} { @include margin-left($i); }
+}
+
+// PADDINGS
+@mixin padding-right($i) {
+    padding-right: $spacer * $i;
+}
+@for $i from 0 through 10 {
+    .pr-#{$i} { @include padding-right($i); }
+}
+
+@mixin padding-left($i) {
+    padding-left: $spacer * $i;
+}
+@for $i from 0 through 10 {
+    .pl-#{$i} { @include padding-left($i); }
+}
+
 // BOOK SLIDER
 .book-slider {
     &__container {
@@ -93,3 +128,12 @@ $font-weights: 100, 200, 300, 400, 500, 600, 700, 800, 900;
     box-shadow: none;
 }
 
+// FIRST LETTER HIGHLIGHT
+.first-letter:first-letter {
+    float: left;
+    font-family: "Playfair Display", serif;
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 0.65;
+    margin: 0.1em 0.1em 0rem 0;
+}

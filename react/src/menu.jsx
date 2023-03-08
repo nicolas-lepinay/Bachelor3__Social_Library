@@ -153,7 +153,7 @@ export const menu2 = {
 	genres: {
 		id: 'genres',
 		text: 'Genres',
-		path: 'genres',
+		path: '/genres',
 		icon: 'BackupTable',
 		subMenu: {
             classics: {
@@ -163,7 +163,7 @@ export const menu2 = {
 				icon: 'ViewAgenda',
 			},
 			fantasy: {
-				id: 'fantasy',
+				id: 'fantastique',
 				text: 'Fantastique',
 				path: 'genres/fantastique',
 				icon: 'ViewAgenda',

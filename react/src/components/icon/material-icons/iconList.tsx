@@ -1473,6 +1473,8 @@ const MaterialIcons = [
 	'Star',
 	'StarBorder',
 	'StarBorderPurple500',
+    'StarEmpty',
+    'StarFull',
 	'StarHalf',
 	'StarOutline',
 	'StarPurple500',

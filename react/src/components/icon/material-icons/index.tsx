@@ -1472,6 +1472,8 @@ export { default as Stairs } from './Stairs';
 export { default as Star } from './Star';
 export { default as StarBorder } from './StarBorder';
 export { default as StarBorderPurple500 } from './StarBorderPurple500';
+export { default as StarEmpty } from './StarEmpty';
+export { default as StarFull } from './StarFull';
 export { default as StarHalf } from './StarHalf';
 export { default as StarOutline } from './StarOutline';
 export { default as StarPurple500 } from './StarPurple500';

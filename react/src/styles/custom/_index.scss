@@ -157,3 +157,11 @@ $font-weights: 100, 200, 300, 400, 500, 600, 700, 800, 900;
     line-height: 0.65;
     margin: 0.1em 0.1em 0rem 0;
 }
+
+.cover {
+    object-fit: cover;
+}
+
+.justified {
+    text-align: justify;
+}

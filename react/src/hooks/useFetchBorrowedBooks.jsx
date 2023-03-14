@@ -10,7 +10,7 @@ const useFetchBorrowedBooks = ({
     // ⚙️ Strapi's URL :
     const API_URL = process.env.REACT_APP_API_URL;
     const BORROWED_BOOKS_ROUTE = process.env.REACT_APP_BORROWED_BOOKS_ROUTE;
-    
+
     const query = `${BORROWED_BOOKS_ROUTE}?populate=*${filters}`;
 
     const [data, setData] = useState([]);

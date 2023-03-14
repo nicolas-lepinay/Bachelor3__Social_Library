@@ -21,6 +21,17 @@ import Card, {
 	CardTitle,
 } from '../../../components/bootstrap/Card';
 
+import OffCanvas, { 
+    OffCanvasHeader, 
+    OffCanvasTitle, 
+    OffCanvasBody 
+} from '../../../components/bootstrap/OffCanvas';
+
+import Avatar from '../../../components/Avatar';
+
+import Select from '../../../components/bootstrap/forms/Select'
+import Option from '../../../components/bootstrap/Option';
+
 import Icon from '../../../components/icon/Icon';
 
 // OTHER COMPONENTS
@@ -52,7 +63,7 @@ const Book = () => {
     // Today :
     const [today, setToday] = useState();
 
-    // Fetch book by ID :
+    // Récupérer le livre par son ID :
       const { 
         data: book, 
         loading: loadingBook,
@@ -60,24 +71,40 @@ const Book = () => {
         setData: setBook, 
     } = useFetchBooks({ filters: `&filters[id]=${id}`, isUnique: true });
 
-    // Fetch borrowed books by book's ID :
+    // Récupérer les emprunts faits pour ce livre :
     const { 
         data: borrowing, 
         setData: setBorrowing, 
     } = useFetchBorrowedBooks({ filters: `&filters[book][id]=${book?.id}&filters[endsAt][$gt]=${today?.toISOString()}` });
 
-    // 🦸 Logged-in user :
-    const user = useAuth()?.user; 
+    // 🦸 Utilisateur connecté :
+    const user = useAuth()?.user;
 
+    // Ouvrir le panneau latéral pour emprunter le livre :
+    const [openPanel, setOpenPanel] = useState(false);
 
-    // LOG
-    //console.log(book);
-    //console.log(user);
-    console.log(borrowing);
-
-    // Average rating :
+    // Note moyenne du livre :
     const [rating, setRating] = useState(0);
     const [stars, setStars] = useState([]);
+
+    // Liste des options d'emprunt :
+    const BORROWING_OPTIONS = [
+        {
+            text: '12 heures',
+            value: 12,
+        },
+        {
+            text: '24 heures',
+            value: 24,
+        },
+        {
+            text: '48 heures',
+            value: 48,
+        },
+    ]
+
+    // LOG
+    console.log(borrowing);
 
     // Erreur :
     if(error)
@@ -143,7 +170,7 @@ const Book = () => {
         book.id && calculateRating();
     }, [id, book]);
 
-    // Get today's date :
+    // Récupération de la date du jour :
     useLayoutEffect( () => {
         setToday(new Date());
     }, [id, book])
@@ -191,6 +218,7 @@ const Book = () => {
                                         className='width-225 mt-4'
                                         size='lg'
                                         icon='BookmarkAdded'
+                                        onClick={() => setOpenPanel(true)}
                                     >Emprunter</Button> 
                                     :
                                     <Button
@@ -288,6 +316,71 @@ const Book = () => {
                         </Card>
                     </div>
 				</div>
+
+                {/* EMPRUNTER LE LIVRE */}
+                <OffCanvas
+                    isBackdrop
+                    isBodyScroll 
+                    isOpen={openPanel}
+                    setOpen={setOpenPanel}
+                    > 
+                    <OffCanvasHeader 
+                        setOpen={setOpenPanel}
+                        >
+                        <OffCanvasTitle id='borrow-panel' className='px-4'>Emprunter un livre</OffCanvasTitle>
+                    </OffCanvasHeader>
+                    <OffCanvasBody>
+                        <div className='d-flex justify-content-center my-4'>
+                            <Avatar
+                                src={book?.attributes?.image?.data?.attributes?.url ? `${API_URL}${book?.attributes?.image?.data?.attributes?.url}` : DefaultCover}
+                                className='cover'
+                                shadow='default'
+                            />
+                        </div>
+
+                        <div className='d-flex flex-column align-items-center my-5'>
+                            <h4 className='fw-bold text-center'>{book?.attributes?.title}</h4>
+                            <h5 className='text-muted mb-4'>{book?.attributes?.author?.data?.attributes?.first_name} {book?.attributes?.author?.data?.attributes?.last_name}</h5>
+
+                                <div className='pb-2'>
+                                    {stars.map((value, i) => (
+                                        <Icon
+                                            key={`panel-star-${i}`}
+                                            icon={value == 1 ? 'StarFull' : value == 0 ? 'StarEmpty' : 'StarHalf'}
+                                            size='2x'
+                                            color='danger'
+                                        />
+                                    ))}
+                                </div>
+                                {rating >= 0 &&
+                                    <div className='align-self-center'>
+                                        <h6 className=''>{rating} sur 5</h6>
+                                    </div>
+                                }
+
+                            <p className='text-muted justified px-4 py-3'>{book?.attributes?.description.length < 540 ? book?.attributes?.description : `${book?.attributes?.description.slice(0, 540)} ...`}</p>
+                        </div>
+
+                        <div className='px-4'>
+                            <h5 className='pl-1 pb-2'>Durée de l'emprunt</h5>
+                            <Select
+                                placeholder='Veuillez choisir une durée...'
+                                size='lg'
+                            >
+                                {BORROWING_OPTIONS.map( option => (
+                                    <Option
+                                        key={option.text}
+                                        value={option.value}
+                                        disabled={option.value > 12}
+                                    >
+                                        {option.text}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </div>
+
+                    </OffCanvasBody>
+                </OffCanvas>
 
 			</Page>
 		</PageWrapper>

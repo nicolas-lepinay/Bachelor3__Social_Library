@@ -63,11 +63,6 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "borrowed_books": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::book.book"
-    },
     "favourite_books": {
       "type": "relation",
       "relation": "oneToMany",

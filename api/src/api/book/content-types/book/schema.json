@@ -28,7 +28,8 @@
       "type": "string"
     },
     "pages": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
     "release_date": {
       "type": "date"

@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_borrowed_book_borrowed_books",
+  "info": {
+    "displayName": "Borrowed Book",
+    "icon": "book",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "endsAt": {
+      "type": "datetime",
+      "required": true
+    },
+    "book": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::book.book"
+    }
+  }
+}

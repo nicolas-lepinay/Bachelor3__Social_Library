@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "borrowed_books",
+  "info": {
+    "singularName": "borrowed-book",
+    "pluralName": "borrowed-books",
+    "displayName": "Borrowed Book",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "endsAt": {
+      "type": "datetime"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "book": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::book.book"
+    }
+  }
+}

@@ -55,6 +55,18 @@ $font-weights: 100, 200, 300, 400, 500, 600, 700, 800, 900;
   }
 }
 
+.uppercase {
+    text-transform: uppercase;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.lowercase {
+    text-transform: lowercase;
+}
+
 // FONT SIZE
 @mixin font-size($size) {
     font-size: $size + px;
@@ -101,6 +113,14 @@ $font-weights: 100, 200, 300, 400, 500, 600, 700, 800, 900;
 }
 @for $i from 0 through 10 {
     .pl-#{$i} { @include padding-left($i); }
+}
+
+// CUSTOM WIDTH
+@mixin width($i) {
+    width: $i + px;
+}
+@for $i from 0 through 2000 {
+    .width-#{$i} { @include width($i); }
 }
 
 // BOOK SLIDER

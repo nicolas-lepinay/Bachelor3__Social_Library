@@ -6,6 +6,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+// OTHER COMPONENTS
+import DefaultCover from '../assets/img/book-default-cover.jpg';
+
 // 📜 MENU :
 import { queryPages } from '../menu';
 
@@ -30,7 +33,11 @@ const BookSlider = ({ books }) => {
                     to={`${queryPages.book.path}/${book.id}`}
                 >
                     <div className='book-slider__container'>
-                        <img src={`${API_URL}${book.attributes.image.data.attributes.url}`} className='book-cover shadow-md' />
+                        {book.attributes.image.data.attributes.url ?
+                            <img src={`${API_URL}${book.attributes.image.data.attributes.url}`} className='book-cover shadow-md' />
+                            :
+                            <img src={DefaultCover} className='book-cover shadow-md' />
+                        }
                         <h3 className='font-playfair' title={book.attributes.title}>
                             {book.attributes.title.length < 50 ? book.attributes.title : `${book.attributes.title.slice(0, 50)}...`}
                         </h3>

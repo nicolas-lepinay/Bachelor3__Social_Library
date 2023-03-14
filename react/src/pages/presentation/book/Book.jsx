@@ -1,11 +1,11 @@
 // ⚛️ REACT
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useLayoutEffect } from 'react';
 
 import { useParams, Link, Navigate } from 'react-router-dom';
 
 // 🅱️ BOOTSTRAP
 import Alert from '../../../components/bootstrap/Alert';
-import Spinner from '../../../components/bootstrap/Spinner';
+import Button from '../../../components/bootstrap/Button';
 
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../layout/Page/Page';
@@ -25,9 +25,12 @@ import Icon from '../../../components/icon/Icon';
 
 // OTHER COMPONENTS
 import BookLeftPanel from '../../../components/BookLeftPanel';
+import DefaultCover from '../../../assets/img/book-default-cover.jpg';
 
 // 🛠️ HOOKS :
+import useAuth from '../../../hooks/useAuth';
 import useFetchBooks from '../../../hooks/useFetchBooks';
+import useFetchBorrowedBooks from '../../../hooks/useFetchBorrowedBooks';
 
 // 📜 MENU PATH :
 import { menu2, queryPages } from '../../../menu';
@@ -46,6 +49,9 @@ const Book = () => {
     // 📔 Book's ID :
     const { id } = useParams();
 
+    // Today :
+    const [today, setToday] = useState();
+
     // Fetch book by ID :
       const { 
         data: book, 
@@ -53,6 +59,21 @@ const Book = () => {
         error,
         setData: setBook, 
     } = useFetchBooks({ filters: `&filters[id]=${id}`, isUnique: true });
+
+    // Fetch borrowed books by book's ID :
+    const { 
+        data: borrowing, 
+        setData: setBorrowing, 
+    } = useFetchBorrowedBooks({ filters: `&filters[book][id]=${book?.id}&filters[endsAt][$gt]=${today?.toISOString()}` });
+
+    // 🦸 Logged-in user :
+    const user = useAuth()?.user; 
+
+
+    // LOG
+    //console.log(book);
+    //console.log(user);
+    console.log(borrowing);
 
     // Average rating :
     const [rating, setRating] = useState(0);
@@ -122,6 +143,11 @@ const Book = () => {
         book.id && calculateRating();
     }, [id, book]);
 
+    // Get today's date :
+    useLayoutEffect( () => {
+        setToday(new Date());
+    }, [id, book])
+
 	return (
 		<PageWrapper
             title={`Book ID ${id}`} isProtected={true} >
@@ -132,12 +158,56 @@ const Book = () => {
                             <CardBody isScrollable>
                                 <div className='row g-3'>
                                     <div className='col-12'>
-                                        <img 
-                                            src={`${API_URL}${book?.attributes?.image?.data?.attributes?.url}`} 
-                                            className='book-cover shadow-md'
-                                        />          
+                                        {book?.attributes?.image?.data?.attributes?.url ?
+                                            <img src={`${API_URL}${book?.attributes?.image?.data?.attributes?.url}`} className='book-cover shadow-md' />  
+                                            :
+                                            <img src={DefaultCover} className='book-cover shadow-md' />  
+                                        }       
                                     </div>
                                 </div>
+
+                                {/* SI L'UTILISATEUR A EMPRUNTÉ LE LIVRE... */}
+                                {borrowing.some(borrow => borrow?.attributes?.user?.data?.id === user?.id) ?
+                                    <h6 className='width-225 text-center text-muted'>
+                                        Vous avez emprunté ce livre {moment((borrowing.find(b => b?.attributes?.user?.data?.id === user?.id))?.attributes?.createdAt).calendar()}
+                                    </h6>
+                                    :
+                                    <h6 className='width-225 text-center text-muted'>
+                                        {book?.attributes?.stock - borrowing.length} sur {book?.attributes?.stock} disponibles
+                                    </h6>
+                                }
+
+                                {/* SI L'UTILISATEUR A EMPRUNTÉ LE LIVRE... */}
+                                {borrowing.some(borrow => borrow?.attributes?.user?.data?.id === user?.id) ?    
+                                    <Button
+                                        color='success'
+                                        className='width-225 mt-4'
+                                        size='lg'
+                                        icon='MenuBook'
+                                    >Lire</Button> 
+                                    : book?.attributes?.stock > borrowing.length ?
+                                    <Button
+                                        color='info'
+                                        className='width-225 mt-4'
+                                        size='lg'
+                                        icon='BookmarkAdded'
+                                    >Emprunter</Button> 
+                                    :
+                                    <Button
+                                        color='danger'
+                                        className='width-225 mt-4'
+                                        size='lg'
+                                        icon='ErrorOutline'
+                                    >Indisponible</Button> 
+                                }
+
+                                <Button
+                                    color='info'
+                                    className='width-225 mt-4 pt-3 pb-3'
+                                    isLink
+                                    isActive
+                                    icon='ShoppingCart'
+                                >Acheter sur Amazon</Button> 
                             </CardBody>
                         </Card>
                     </div>

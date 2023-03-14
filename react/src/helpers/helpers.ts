@@ -121,7 +121,7 @@ export const findUserById = async (id: number) => {
     const USERS_ROUTE = process.env.REACT_APP_USERS_ROUTE;
 
     try {
-        const res = await axios.get(`${API_URL}${USERS_ROUTE}?filters[id]=${id}`);
+        const res = await axios.get(`${API_URL}${USERS_ROUTE}?filters[id]=${id}&populate=*`);
         return res.data[0];
     } catch(err) {
         console.log(`FIND USER BY ID | Error : ${err}`)
